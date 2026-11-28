@@ -145,6 +145,14 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 .join label{font-size:15px;font-weight:600;color:#d8e0f0;display:flex;flex-direction:column;gap:6px}
 .join input,.join select{background:#16264a;border-color:#2a3d66;color:#fff}
 .join input::placeholder{color:#8796b8}
+.crew{border:0;margin:0;padding:0;min-width:0}
+.crew legend{font-size:15px;font-weight:600;color:#d8e0f0;padding:0;margin-bottom:8px}
+.pills{display:flex;flex-wrap:wrap;gap:10px}
+.join label.pill{position:relative;flex-direction:row;gap:0}
+.pill input{position:absolute;opacity:0;width:100%;height:100%;min-height:0;margin:0;padding:0;cursor:pointer;inset:0}
+.pill span{display:inline-flex;align-items:center;justify-content:center;min-height:52px;min-width:72px;padding:12px 20px;border-radius:999px;border:1.5px solid #2a3d66;background:#16264a;color:#fff;font-weight:600;font-size:16px}
+.pill input:checked+span{background:var(--amber);border-color:var(--amber);color:#141b2b}
+.pill input:focus-visible+span{outline:3px solid var(--amber);outline-offset:3px}
 .fhelp{font-size:14px;font-weight:500;color:#b9c4dc}
 .err{color:#ffb4a8;font-size:15px;min-height:1.2em}
 .note{font-size:14px;color:#b9c4dc}
@@ -320,18 +328,15 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
             <label for="jEmail">Email
               <input id="jEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Email" required aria-describedby="jErr">
             </label>
-            <label for="jCrew">Crew size
-              <select id="jCrew" name="crew_size" required aria-describedby="jErr">
-                <option value="">Choose one</option>
-                <option>1&ndash;3</option><option>4&ndash;6</option><option>7&ndash;8</option><option>9+ (we'll quote you)</option>
-              </select>
-            </label>
-            <label for="jTrade">Your trade (optional)
-              <select id="jTrade" name="trade">
-                <option value="">Choose one</option>
-                <option>HVAC</option><option>Plumbing</option><option>Electrical</option><option>Cleaning</option><option>Landscaping</option><option>Pools</option><option>Other</option>
-              </select>
-            </label>
+            <fieldset class="crew" aria-describedby="jErr">
+              <legend>Crew size</legend>
+              <div class="pills">
+                <label class="pill"><input type="radio" name="crew_size" value="1&ndash;3" required><span>1&ndash;3</span></label>
+                <label class="pill"><input type="radio" name="crew_size" value="4&ndash;6" required><span>4&ndash;6</span></label>
+                <label class="pill"><input type="radio" name="crew_size" value="7&ndash;8" required><span>7&ndash;8</span></label>
+                <label class="pill"><input type="radio" name="crew_size" value="9+ (we'll quote you)" required><span>9+ (we&rsquo;ll quote you)</span></label>
+              </div>
+            </fieldset>
             <p class="err" id="jErr" role="alert"></p>
             <button class="btn btn-amber" type="submit">Request a founding pilot</button>
             <p class="note">Account holders must be 18 or older. Team members invited by a business account must be at least 16. By joining you agree to our <a href="/privacy">Privacy Policy</a> and <a href="/terms">Terms</a>.</p>
@@ -360,7 +365,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
   });
   form.addEventListener('submit',function(e){
     e.preventDefault();
-    var nm=document.getElementById('jName'),ph=document.getElementById('jPhone'),cs=document.getElementById('jCrew');
+    var nm=document.getElementById('jName'),ph=document.getElementById('jPhone'),cs=form.querySelector('input[name=crew_size]:checked');
     var miss='Please fill in this field.';
     if(!nm.value.trim()){err.textContent=miss;nm.focus();return;}
     if(!ph.value.trim()){err.textContent=miss;ph.focus();return;}
@@ -368,7 +373,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
     var v=email.value.trim();
     if(!v){err.textContent=miss;email.focus();return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent='Please enter a valid email address.';email.focus();return;}
-    if(!cs.value){err.textContent=miss;cs.focus();return;}
+    if(!cs){err.textContent='Please choose your crew size.';form.querySelector('input[name=crew_size]').focus();return;}
     err.textContent='';
     var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Sending...';
     fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
