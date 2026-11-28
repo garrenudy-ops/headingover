@@ -123,6 +123,9 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 .price small{font:500 16px var(--font-body);color:var(--muted)}
 .plan p{color:var(--muted);font-size:16px}
 .tile .badge{margin-bottom:2px}
+.pilot-cta{margin-top:24px;display:flex;flex-direction:column;gap:14px;align-items:stretch}
+.founder{font-size:16px;color:var(--text)}
+.founder a{color:var(--ink);text-underline-offset:3px}
 .price-note{margin-top:18px;font-size:15px;color:var(--muted)}
 
 /* FAQ */
@@ -142,6 +145,7 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 .join label{font-size:15px;font-weight:600;color:#d8e0f0;display:flex;flex-direction:column;gap:6px}
 .join input,.join select{background:#16264a;border-color:#2a3d66;color:#fff}
 .join input::placeholder{color:#8796b8}
+.fhelp{font-size:14px;font-weight:500;color:#b9c4dc}
 .err{color:#ffb4a8;font-size:15px;min-height:1.2em}
 .note{font-size:14px;color:#b9c4dc}
 .note a{color:#fff;text-underline-offset:3px}
@@ -158,7 +162,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
 @media (min-width:700px){
   .sec{padding-block:80px}
   .hero{padding-block:56px 32px}
-  .hero-cta{flex-direction:row;align-items:center}
+  .hero-cta,.pilot-cta{flex-direction:row;align-items:center}
   .helper{text-align:left}
   .steps{grid-template-columns:repeat(3,1fr)}
   .tiles{grid-template-columns:1fr 1fr}
@@ -250,8 +254,8 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
       <div class="sec-head">
         <p class="eyebrow">St. George founding pilot</p>
         <h2>Be one of the first 5 St. George crews.</h2>
-        <p>Pilot crews get three things: text in a change, it lands on Google Calendar, and your crew gets a text. Pilot crews help pick what&rsquo;s next.</p>
-        <p class="trades"><b>Pilot trades:</b> landscaping, pools, cleaning, then HVAC and plumbing.</p>
+        <p>Text in a change. It lands on Google Calendar, and your crew gets a text.</p>
+        <p class="trades"><b>Pilot trades:</b> landscaping, pools, cleaning, HVAC, plumbing, and more.</p>
       </div>
       <div class="plans">
         <div class="plan pop">
@@ -259,7 +263,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
           <h3>Founding pilot</h3>
           <div class="price">$49<small> /month</small></div>
           <p>Locked for 12 months. For crews of up to 6. No card.</p>
-          <p><b>Your 30 free days start when your first real job goes through, or 14 days after you sign up, whichever comes first.</b></p>
+          <p><b>30 days free from your first real job, or 14 days after you sign up, whichever comes first.</b></p>
         </div>
         <div class="plan">
           <h3>Crew</h3>
@@ -273,6 +277,10 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
         </div>
       </div>
       <p class="price-note">You&rsquo;ll see your exact price before your first charge, get a reminder before it, and can cancel online anytime.</p>
+      <div class="pilot-cta">
+        <a class="btn btn-primary" href="#join">Request a founding pilot</a>
+        <p class="founder">Built in St. George by Garren, a local founder. Questions? Email <a href="mailto:hello@headingover.com">hello@headingover.com</a>.</p>
+      </div>
     </div>
   </section>
 
@@ -282,10 +290,10 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
       <div class="faq">
         <details><summary>Do my techs need to download an app?</summary><p>No. You text HeadingOver. Your crew gets a text.</p></details>
         <details><summary>Will you text my customers?</summary><p>Not at launch. HeadingOver texts you and your crew. Customer reminders come later, and only to customers who have agreed to texts from your business.</p></details>
-        <details><summary>How much does it cost?</summary><p>Founding pilot: Your 30 free days start when your first real job goes through, or 14 days after you sign up, whichever comes first. No card. Then $49/month locked for 12 months, for crews of up to 6 and the first 5 St. George crews only. After the pilot, Crew is $59/month for up to 3 users (300 texts to HeadingOver a month, which doesn't count the crew group chat, plus $0.05 per extra text), and Team is $99/month for 4 to 8 users (600 texts to HeadingOver a month, plus $0.05 per extra text). You'll see your exact price before your first charge, get a reminder before it, and can cancel online anytime.</p></details>
+        <details><summary>How much does it cost?</summary><p>Founding pilot: 30 days free from your first real job, or 14 days after you sign up, whichever comes first. No card. Then $49/month locked for 12 months, for crews of up to 6 and the first 5 St. George crews only. After the pilot, Crew is $59/month for up to 3 users (300 texts to HeadingOver a month, which doesn't count the crew group chat, plus $0.05 per extra text), and Team is $99/month for 4 to 8 users (600 texts to HeadingOver a month, plus $0.05 per extra text). You'll see your exact price before your first charge, get a reminder before it, and can cancel online anytime.</p></details>
         <details><summary>What can I text in today?</summary><p>Jobs, shifts, and time-off changes you make as the manager. HeadingOver adds them to your Google Calendar and texts the people who need to know.</p></details>
         <details><summary>What is a founding pilot?</summary><p>An early spot for a crew manager to use HeadingOver on real jobs: text in a change, it lands on Google Calendar, and your crew gets a text. Pilot crews help pick what&rsquo;s next.</p></details>
-        <details><summary>Already using Jobber or a whiteboard?</summary><p>HeadingOver works with Google Calendar today. If your schedule already runs on Google Calendar, or a whiteboard you'd happily replace, it's a fit. If it lives in Jobber or similar software, we're not a fit yet. Email <a href="mailto:hello@headingover.com" style="color:inherit">hello@headingover.com</a> and we'll tell you when that changes.</p></details>
+        <details><summary>Already using Jobber?</summary><p>HeadingOver works with Google Calendar today, so it's best for crews who schedule there or on a whiteboard. If your schedule lives in another app, tell us. Pilot crews help pick what we connect next.</p></details>
         <details><summary>Does it work with the calendar I already use?</summary><p>It works with Google Calendar today. You connect it once. HeadingOver uses your Google Calendar only to add and update the events you ask for and to check your schedule for conflicts. We never sell your calendar data or use it to train AI.</p></details>
       </div>
     </div>
@@ -302,8 +310,21 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
           <form id="joinForm" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="company_url" novalidate>
             <input type="hidden" name="form-name" value="waitlist">
             <p hidden><label>Leave this empty<input name="company_url" tabindex="-1" autocomplete="off"></label></p>
+            <label for="jName">Name
+              <input id="jName" name="name" type="text" autocomplete="name" placeholder="Name" required aria-describedby="jErr">
+            </label>
+            <label for="jPhone">Phone
+              <input id="jPhone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="Phone" required aria-describedby="jPhoneHelp jErr">
+              <span class="fhelp" id="jPhoneHelp">We'll call, not text.</span>
+            </label>
             <label for="jEmail">Email
               <input id="jEmail" name="email" type="email" inputmode="email" autocomplete="email" placeholder="Email" required aria-describedby="jErr">
+            </label>
+            <label for="jCrew">Crew size
+              <select id="jCrew" name="crew_size" required aria-describedby="jErr">
+                <option value="">Choose one</option>
+                <option>1&ndash;3</option><option>4&ndash;6</option><option>7&ndash;8</option><option>9+ (we'll quote you)</option>
+              </select>
             </label>
             <label for="jTrade">Your trade (optional)
               <select id="jTrade" name="trade">
@@ -326,7 +347,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
 
 <footer>
   <div class="wrap">
-    <div><b style="color:var(--ink)">HeadingOver</b><br>Schedule the crew by text. They don&rsquo;t need an app.<br>Built in St. George by Garren, a local founder. Questions? Email <a href="mailto:hello@headingover.com">hello@headingover.com</a>.<br>&copy; 2026 HeadingOver</div>
+    <div>&copy; 2026 HeadingOver<br><a href="mailto:hello@headingover.com">hello@headingover.com</a></div>
     <nav aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/sms-terms">SMS Terms</a></nav>
   </div>
 </footer>
@@ -335,13 +356,19 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
 (function(){
   var form=document.getElementById('joinForm'),email=document.getElementById('jEmail'),err=document.getElementById('jErr');
   document.getElementById('heroCta').addEventListener('click',function(){
-    setTimeout(function(){email.focus({preventScroll:true});},500);
+    setTimeout(function(){document.getElementById('jName').focus({preventScroll:true});},500);
   });
   form.addEventListener('submit',function(e){
     e.preventDefault();
+    var nm=document.getElementById('jName'),ph=document.getElementById('jPhone'),cs=document.getElementById('jCrew');
+    var miss='Please fill in this field.';
+    if(!nm.value.trim()){err.textContent=miss;nm.focus();return;}
+    if(!ph.value.trim()){err.textContent=miss;ph.focus();return;}
+    if(ph.value.replace(/\D/g,'').length<10){err.textContent='Please enter a valid phone number.';ph.focus();return;}
     var v=email.value.trim();
-    if(!v){err.textContent='Please fill in this field.';email.focus();return;}
+    if(!v){err.textContent=miss;email.focus();return;}
     if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)){err.textContent='Please enter a valid email address.';email.focus();return;}
+    if(!cs.value){err.textContent=miss;cs.focus();return;}
     err.textContent='';
     var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Sending...';
     fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
