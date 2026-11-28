@@ -1,0 +1,694 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta property="og:title" content="HeadingOver: just text it, it's booked">
+<meta property="og:description" content="Text the job. It lands on your Google Calendar, and your customer gets a confirmation and a reminder.">
+<meta property="og:url" content="https://headingover.com/">
+<meta name="theme-color" content="#0f1b33">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%23f5a524'/%3E%3Cpath d='M10 13.5A3.5 3.5 0 0 1 13.5 10h13a3.5 3.5 0 0 1 3.5 3.5v9a3.5 3.5 0 0 1-3.5 3.5H18l-5.5 4.5V26A3.5 3.5 0 0 1 10 22.5z' fill='%230f1b33'/%3E%3C/svg%3E">
+<style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}</style>
+<title>HeadingOver</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Text the job. It lands on your Google Calendar, and your customer gets a confirmation and a reminder. Scheduling for small home-service crews.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: Square-style marketing page. Wide white bands, big product mockups (phone texts, a calendar) as the imagery, one deep-navy band for the signup. */
+:root{
+  --bg:#ffffff;
+  --bg-soft:#f4f6f9;
+  --ink:#0f1b33;          /* deep navy, headings + primary buttons */
+  --text:#2a3550;
+  --muted:#5c6780;
+  --line:#e2e6ee;
+  --amber:#f5a524;        /* warm accent */
+  --amber-soft:#fff3dc;
+  --teal:#0f9d8f;         /* secondary accent: confirmations, "done" */
+  --teal-soft:#dcf4f0;
+  --navy-band:#0f1b33;
+  --on-navy:#e9eefa;
+  --bubble-in:#e9ecf2;
+  --bubble-out:#0f1b33;
+  --bubble-out-text:#ffffff;
+  --phone:#0f1b33;
+  --screen:#ffffff;
+  --card:#ffffff;
+  --shadow:0 18px 40px -18px rgba(15,27,51,.28);
+  --btn-bg:#0f1b33; --btn-text:#ffffff;
+  --font-display:"Bricolage Grotesque","Figtree",system-ui,sans-serif;
+  --font-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-lg:28px; --r-md:18px; --r-sm:12px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0b1324; --bg-soft:#111b31; --ink:#f3f6fc; --text:#cfd7e8; --muted:#93a0bb; --line:#22304d;
+    --amber:#f7b23e; --amber-soft:#2e2414; --teal:#2fc2b2; --teal-soft:#10302d;
+    --navy-band:#060c19; --on-navy:#e9eefa;
+    --bubble-in:#22304d; --bubble-out:#f7b23e; --bubble-out-text:#141b2b;
+    --phone:#1d2a45; --screen:#0f182c; --card:#111b31;
+    --shadow:0 18px 40px -18px rgba(0,0,0,.6);
+    --btn-bg:#f7b23e; --btn-text:#141b2b;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0b1324; --bg-soft:#111b31; --ink:#f3f6fc; --text:#cfd7e8; --muted:#93a0bb; --line:#22304d;
+  --amber:#f7b23e; --amber-soft:#2e2414; --teal:#2fc2b2; --teal-soft:#10302d;
+  --navy-band:#060c19; --on-navy:#e9eefa;
+  --bubble-in:#22304d; --bubble-out:#f7b23e; --bubble-out-text:#141b2b;
+  --phone:#1d2a45; --screen:#0f182c; --card:#111b31;
+  --shadow:0 18px 40px -18px rgba(0,0,0,.6);
+  --btn-bg:#f7b23e; --btn-text:#141b2b;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--bg)}
+h1,h2,h3{font-family:var(--font-display);color:var(--ink);margin:0;text-wrap:balance;letter-spacing:-.02em;line-height:1.05}
+p{margin:0}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.eyebrow{font-weight:700;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.lede{font-size:clamp(18px,2vw,21px);color:var(--muted);max-width:36ch}
+:focus-visible{outline:3px solid var(--amber);outline-offset:3px;border-radius:8px}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:600 16px/1 var(--font-body);padding:16px 24px;border-radius:999px;border:0;cursor:pointer;text-decoration:none;transition:transform .15s ease, background .15s ease}
+.btn:hover{transform:translateY(-1px)}
+.btn-primary{background:var(--btn-bg);color:var(--btn-text)}
+.btn-amber{background:var(--amber);color:#141b2b}
+.btn-ghost{background:transparent;color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--line)}
+.btn-sm{padding:11px 18px;font-size:15px}
+
+/* Nav */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:16px;height:68px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 21px/1 var(--font-display);color:var(--ink);letter-spacing:-.02em}
+.brand svg{flex:none}
+.nav-links{display:flex;gap:28px;font-weight:600;font-size:15px}
+.nav-links a{text-decoration:none;color:var(--text)}
+.nav-links a:hover{color:var(--ink)}
+.nav-right{display:flex;align-items:center;gap:10px}
+@media (max-width:820px){.nav-links{display:none}}
+
+/* Hero */
+.hero{padding-block:64px 40px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.hero h1{font-size:clamp(44px,7vw,84px);font-weight:800}
+.hero h1 .hl{background:linear-gradient(transparent 62%,var(--amber-soft) 62%);padding:0 .08em}
+.hero .lede{margin-top:22px}
+.hero-form{margin-top:30px;display:flex;gap:10px;flex-wrap:wrap;max-width:500px}
+.hero-form input{flex:1 1 220px;min-width:0}
+.fine{margin-top:14px;font-size:14px;color:var(--muted);display:flex;gap:18px;flex-wrap:wrap}
+.fine span{display:inline-flex;align-items:center;gap:6px}
+.fine svg{color:var(--teal)}
+input,select{font:500 16px var(--font-body);color:var(--ink);background:var(--card);border:1.5px solid var(--line);border-radius:999px;padding:15px 20px;width:100%}
+select{appearance:none;-webkit-appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--muted) 50%),linear-gradient(135deg,var(--muted) 50%,transparent 50%);background-position:calc(100% - 22px) 52%,calc(100% - 16px) 52%;background-size:6px 6px;background-repeat:no-repeat;padding-right:40px}
+input:focus,select:focus{outline:none;border-color:var(--amber)}
+@media (max-width:900px){.hero-grid{grid-template-columns:1fr;gap:40px}.hero{padding-block:40px 24px}}
+
+/* Phone mockup */
+.stage{position:relative;display:flex;justify-content:center;padding-block:10px}
+.stage::before{content:"";position:absolute;inset:6% 4% 4% 10%;background:radial-gradient(closest-side,var(--amber-soft),transparent);z-index:0;border-radius:50%}
+.phone{position:relative;z-index:1;width:min(330px,100%);background:var(--phone);border-radius:46px;padding:12px;box-shadow:var(--shadow)}
+.screen{background:var(--screen);border-radius:36px;overflow:hidden;min-height:540px;display:flex;flex-direction:column}
+.screen-top{display:flex;flex-direction:column;align-items:center;gap:4px;padding:18px 16px 12px;border-bottom:1px solid var(--line)}
+.avatar{width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--amber);color:#141b2b;font:800 16px var(--font-display)}
+.screen-top b{font-size:13px;color:var(--ink)}
+.screen-top small{font-size:11px;color:var(--muted)}
+.thread{display:flex;flex-direction:column;gap:8px;padding:16px 14px 20px;font-size:15px;line-height:1.35}
+.ts{align-self:center;font-size:11px;color:var(--muted);margin:2px 0 4px}
+.b{max-width:82%;padding:10px 14px;border-radius:20px;animation:pop .45s ease both}
+.b.in{align-self:flex-start;background:var(--bubble-in);color:var(--ink);border-bottom-left-radius:6px}
+.b.out{align-self:flex-end;background:var(--bubble-out);color:var(--bubble-out-text);border-bottom-right-radius:6px}
+.b.card{align-self:flex-start;background:var(--card);border:1.5px solid var(--line);color:var(--ink);border-radius:16px;padding:10px 12px;display:flex;gap:10px;align-items:center;font-size:13px;max-width:88%}
+.b.card .dot{width:10px;height:36px;border-radius:6px;background:var(--teal);flex:none}
+.b.card strong{display:block;font-size:14px}
+.b:nth-child(2){animation-delay:.1s}.b:nth-child(3){animation-delay:.5s}.b:nth-child(4){animation-delay:.9s}.b:nth-child(5){animation-delay:1.2s}.b:nth-child(6){animation-delay:1.5s}
+@keyframes pop{from{transform:translateY(8px) scale(.97)}to{transform:none}}
+.float-tag{position:absolute;z-index:2;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 14px;box-shadow:var(--shadow);font-size:13px;font-weight:600;color:var(--ink);display:flex;gap:10px;align-items:center}
+.float-tag .ic{width:30px;height:30px;border-radius:10px;display:grid;place-items:center;flex:none}
+.float-tag small{display:block;font-weight:500;color:var(--muted)}
+.tag-a{left:-8px;bottom:3%}.tag-a .ic{background:var(--teal-soft);color:var(--teal)}
+.tag-b{right:-8px;top:2%}.tag-b .ic{background:var(--amber-soft);color:#b86e00}
+@media (max-width:560px){.float-tag{display:none}}
+
+/* Trades strip */
+.trades{padding-block:26px 8px}
+.trades .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:10px 12px;justify-content:center}
+.trades p{width:100%;text-align:center;font-size:14px;color:var(--muted);margin-bottom:6px}
+.chip{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:999px;background:var(--bg-soft);color:var(--ink);font-weight:600;font-size:15px}
+.chip svg{color:var(--amber)}
+
+/* Sections */
+section{scroll-margin-top:80px}
+.sec{padding-block:96px}
+.sec-head{display:flex;flex-direction:column;gap:14px;max-width:720px;margin-bottom:48px}
+.sec-head h2{font-size:clamp(34px,4.6vw,56px);font-weight:800}
+.sec-head p{font-size:19px;color:var(--muted);max-width:56ch}
+@media (max-width:700px){.sec{padding-block:64px}.sec-head{margin-bottom:32px}}
+
+/* Problem band */
+.problem{background:var(--bg-soft)}
+.problem-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.pcard{background:var(--card);border-radius:var(--r-md);padding:26px;display:flex;flex-direction:column;gap:10px}
+.pcard .big{font:800 40px/1 var(--font-display);color:var(--ink);letter-spacing:-.02em}
+.pcard p{color:var(--muted);font-size:16px}
+@media (max-width:820px){.problem-grid{grid-template-columns:1fr}}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.step{background:var(--bg-soft);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:16px;min-width:0}
+.step-n{width:36px;height:36px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font:700 16px var(--font-display)}
+.step h3{font-size:26px;font-weight:700}
+.step p{color:var(--muted);font-size:16px}
+.step-vis{margin-top:auto;background:var(--card);border-radius:var(--r-md);padding:16px;display:flex;flex-direction:column;gap:8px;font-size:14px;min-height:150px;justify-content:center}
+.mini.out{align-self:flex-end;background:var(--bubble-out);color:var(--bubble-out-text);padding:9px 12px;border-radius:16px 16px 4px 16px;max-width:90%}
+.mini.in{align-self:flex-start;background:var(--bubble-in);color:var(--ink);padding:9px 12px;border-radius:16px 16px 16px 4px;max-width:90%}
+.ev{display:flex;gap:10px;align-items:stretch;color:var(--ink)}
+.ev i{width:4px;border-radius:4px;background:var(--teal);flex:none}
+.ev.am i{background:var(--amber)}
+.ev small{display:block;color:var(--muted)}
+.ev-time{font:600 12px var(--font-body);color:var(--muted);width:44px;flex:none;padding-top:2px;font-variant-numeric:tabular-nums}
+@media (max-width:900px){.steps{grid-template-columns:1fr}}
+
+/* Split feature */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
+.split.rev .split-copy{order:2}
+.split-copy{display:flex;flex-direction:column;gap:18px;min-width:0}
+.split-copy h2{font-size:clamp(34px,4.4vw,54px);font-weight:800}
+.checks{list-style:none;margin:8px 0 0;padding:0;display:flex;flex-direction:column;gap:14px}
+.checks li{display:flex;gap:12px;align-items:flex-start}
+.checks .ck{width:26px;height:26px;border-radius:50%;background:var(--teal-soft);color:var(--teal);display:grid;place-items:center;flex:none;margin-top:1px}
+.checks b{color:var(--ink)}
+@media (max-width:900px){.split{grid-template-columns:1fr;gap:40px}.split.rev .split-copy{order:0}}
+
+/* Calendar mock */
+.cal{background:var(--card);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;min-width:0}
+.cal-head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line);gap:10px}
+.cal-head b{color:var(--ink);font:700 17px var(--font-display)}
+.cal-head span{font-size:13px;color:var(--muted)}
+.cal-scroll{overflow-x:auto}
+.cal-grid{display:grid;grid-template-columns:52px repeat(5,minmax(96px,1fr));min-width:540px;font-size:12px}
+.cal-grid .dh{padding:10px 8px;text-align:center;color:var(--muted);font-weight:600;border-bottom:1px solid var(--line)}
+.cal-grid .dh b{display:block;font:700 18px var(--font-display);color:var(--ink)}
+.cal-grid .dh.today b{color:#141b2b;background:var(--amber);border-radius:50%;width:32px;height:32px;display:grid;place-items:center;margin:2px auto 0}
+.col{position:relative;border-left:1px solid var(--line);height:340px}
+.hours{position:relative;height:340px}
+.hours span{position:absolute;right:8px;color:var(--muted);font-variant-numeric:tabular-nums;transform:translateY(-50%)}
+.job{position:absolute;left:5px;right:5px;border-radius:10px;padding:6px 8px;line-height:1.25;color:var(--ink);overflow:hidden}
+.job b{display:block;font-size:12px}
+.job.t{background:var(--teal-soft);border-left:3px solid var(--teal)}
+.job.a{background:var(--amber-soft);border-left:3px solid var(--amber)}
+.job .conf{display:inline-flex;align-items:center;gap:3px;color:var(--teal);font-weight:700;font-size:11px;margin-top:2px}
+
+/* Feature tiles */
+.tiles{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.tile{background:var(--bg-soft);border-radius:var(--r-lg);padding:28px;display:flex;flex-direction:column;gap:12px;min-width:0}
+.tile .ti{width:46px;height:46px;border-radius:14px;background:var(--card);display:grid;place-items:center;color:var(--ink)}
+.tile h3{font-size:22px;font-weight:700}
+.tile p{color:var(--muted);font-size:16px}
+.tile q{display:block;quotes:none;margin-top:4px;font-weight:600;color:var(--ink);background:var(--card);border-radius:14px;padding:10px 14px;font-size:15px}
+@media (max-width:900px){.tiles{grid-template-columns:1fr 1fr}}
+@media (max-width:620px){.tiles{grid-template-columns:1fr}}
+
+/* Pricing */
+.pricing{background:var(--bg-soft)}
+.plans{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;align-items:stretch}
+.plan{background:var(--card);border-radius:var(--r-lg);padding:32px;display:flex;flex-direction:column;gap:18px;border:1.5px solid transparent;min-width:0}
+.plan.pop{border-color:var(--ink)}
+.plan-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.plan h3{font-size:24px;font-weight:700}
+.badge{font-size:12px;font-weight:700;padding:6px 10px;border-radius:999px;background:var(--amber);color:#141b2b;white-space:nowrap}
+.badge.soft{background:var(--bg-soft);color:var(--muted)}
+.price{font:800 52px/1 var(--font-display);color:var(--ink);letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.price small{font:500 16px var(--font-body);color:var(--muted);letter-spacing:0}
+.plan > p{color:var(--muted);font-size:16px}
+.plan ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;font-size:15px}
+.plan li{display:flex;gap:10px;align-items:flex-start}
+.plan li svg{color:var(--teal);flex:none;margin-top:3px}
+.plan .btn{margin-top:auto}
+.price-note{margin-top:24px;font-size:14px;color:var(--muted);text-align:center}
+@media (max-width:900px){.plans{grid-template-columns:1fr}}
+
+/* FAQ */
+.faq{max-width:820px}
+.faq details{border-bottom:1px solid var(--line);padding-block:6px}
+.faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center;gap:16px;padding-block:18px;font:700 20px/1.3 var(--font-display);color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary .pm{width:32px;height:32px;border-radius:50%;background:var(--bg-soft);display:grid;place-items:center;flex:none;transition:transform .2s}
+.faq details[open] .pm{transform:rotate(45deg)}
+.faq details p{padding:0 0 20px;color:var(--muted);max-width:62ch}
+
+/* Waitlist band */
+.join{background:var(--navy-band);color:var(--on-navy);border-radius:var(--r-lg);padding:64px 56px;display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+.join h2{color:#ffffff;font-size:clamp(34px,4.4vw,54px);font-weight:800}
+.join .lede{color:#b9c4dc;margin-top:16px}
+.join-perks{list-style:none;padding:0;margin:26px 0 0;display:flex;flex-direction:column;gap:12px;color:#d8e0f0}
+.join-perks li{display:flex;gap:10px;align-items:flex-start}
+.join-perks svg{color:var(--amber);flex:none;margin-top:3px}
+.join form{display:flex;flex-direction:column;gap:12px;min-width:0}
+.join label{font-size:14px;font-weight:600;color:#d8e0f0;display:flex;flex-direction:column;gap:6px}
+.join input,.join select{background:#16264a;border-color:#2a3d66;color:#ffffff;border-radius:14px}
+.join input::placeholder{color:#8796b8}
+.join select{background-color:#16264a}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.join .btn{margin-top:6px}
+.join .tiny{font-size:13px;color:#8796b8}
+.join .err{color:#ffb4a8;font-size:14px;min-height:1em}
+.done{background:#16264a;border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:10px}
+.done h3{color:#ffffff;font-size:28px}
+.done p{color:#b9c4dc}
+.preview-note{display:inline-flex;gap:8px;align-items:center;font-size:13px;color:#141b2b;background:var(--amber);border-radius:999px;padding:6px 12px;font-weight:600;align-self:flex-start}
+@media (max-width:900px){.join{grid-template-columns:1fr;padding:44px 24px;gap:32px}}
+@media (max-width:480px){.row2{grid-template-columns:1fr}}
+
+/* Footer */
+footer{padding-block:56px 40px;border-top:1px solid var(--line);margin-top:96px}
+.foot{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px}
+.foot h4{margin:0 0 12px;font-size:14px;color:var(--ink)}
+.foot ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px;font-size:15px;color:var(--muted)}
+.foot a{text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot-blurb{margin-top:12px;color:var(--muted);font-size:15px;max-width:32ch}
+.legal{margin-top:40px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:13px;color:var(--muted)}
+@media (max-width:760px){.foot{grid-template-columns:1fr 1fr}.foot > div:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+
+
+<!-- Icons -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="i-cal" viewBox="0 0 24 24"><rect x="3.5" y="5" width="17" height="15.5" rx="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M4 6.5A3.5 3.5 0 0 1 7.5 3h9A3.5 3.5 0 0 1 20 6.5v6a3.5 3.5 0 0 1-3.5 3.5H10l-4.5 4v-4.2A3.5 3.5 0 0 1 4 12.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-phone" viewBox="0 0 24 24"><path d="M6.6 3.5h2.6l1.4 4-2 1.4a12 12 0 0 0 6.5 6.5l1.4-2 4 1.4v2.6a2.4 2.4 0 0 1-2.6 2.4A16.6 16.6 0 0 1 4.2 6.1a2.4 2.4 0 0 1 2.4-2.6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></symbol>
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3.5" fill="none" stroke="currentColor" stroke-width="2"/><path d="M2.5 20c.6-3.5 3.2-5.5 6.5-5.5s5.9 2 6.5 5.5M16 5.2a3.4 3.4 0 0 1 0 6.6M18 14.8c2 .7 3.2 2.5 3.5 5.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></symbol>
+  <symbol id="i-move" viewBox="0 0 24 24"><path d="M4 12h15M14 6.5l5.5 5.5-5.5 5.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 3l7.5 3v5.5c0 4.6-3.1 8.2-7.5 9.5-4.4-1.3-7.5-4.9-7.5-9.5V6z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.8 12l2.2 2.2 4.3-4.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path d="M6 16.5V11a6 6 0 0 1 12 0v5.5l1.5 2h-15zM10 20.5a2 2 0 0 0 4 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/></symbol>
+  <symbol id="i-spark" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4" fill="currentColor"/></symbol>
+  <symbol id="logo" viewBox="0 0 40 40"><rect width="40" height="40" rx="12" fill="#f5a524"/><path d="M10 13.5A3.5 3.5 0 0 1 13.5 10h13a3.5 3.5 0 0 1 3.5 3.5v9a3.5 3.5 0 0 1-3.5 3.5H18l-5.5 4.5V26A3.5 3.5 0 0 1 10 22.5z" fill="#0f1b33"/><path d="M15 18l3 3 6-6" fill="none" stroke="#f5a524" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="HeadingOver home"><svg width="34" height="34" aria-hidden="true"><use href="#logo"/></svg>HeadingOver</a>
+    <nav class="nav-links" aria-label="Main">
+      <a href="#how">How it works</a>
+      <a href="#customers">Customer texts</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="nav-right">
+      <a class="btn btn-primary btn-sm" href="#join">Get early access</a>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+  <!-- HERO -->
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <p class="eyebrow">Scheduling for small home-service crews</p>
+        <h1 style="margin-top:16px">Just text it. <span class="hl">It's booked.</span></h1>
+        <p class="lede">Text HeadingOver the job the way you'd tell a friend. It goes on your Google Calendar, and your customer gets a confirmation and a reminder, so fewer people forget you're coming.</p>
+        <form class="hero-form" id="heroForm" novalidate>
+          <label for="heroEmail" class="sr" style="position:absolute;left:-9999px">Email</label>
+          <input id="heroEmail" type="email" placeholder="you@yourbusiness.com" autocomplete="email">
+          <button class="btn btn-primary" type="submit">Get early access</button>
+        </form>
+        <div class="fine">
+          <span><svg width="16" height="16"><use href="#i-check"/></svg>No app to download</span>
+          <span><svg width="16" height="16"><use href="#i-check"/></svg>Works with Google Calendar</span>
+          <span><svg width="16" height="16"><use href="#i-check"/></svg>Set up in minutes</span>
+        </div>
+      </div>
+
+      <div class="stage" aria-label="Example text conversation">
+        <div class="float-tag tag-b"><span class="ic"><svg width="18" height="18"><use href="#i-cal"/></svg></span><div>Added to Google Calendar<small>Tue, Nov 24 · 3:00 PM</small></div></div>
+        <div class="phone">
+          <div class="screen">
+            <div class="screen-top">
+              <span class="avatar">H</span>
+              <b>HeadingOver</b>
+              <small>Text message</small>
+            </div>
+            <div class="thread">
+              <span class="ts">Today 7:42 AM</span>
+              <div class="b out">Book the Smiths Tuesday 3pm, deep clean, 2 hrs. Karen's cell is 555-0143</div>
+              <div class="b in">Got it. Smiths, deep clean, Tue Nov 24 from 3 to 5 PM. It's on your calendar.</div>
+              <div class="b card"><span class="dot"></span><div><strong>Smiths · Deep clean</strong>Tue 3:00 to 5:00 PM · 412 Maple St</div></div>
+              <div class="b in">I texted Karen a confirmation. I'll remind her Monday evening too.</div>
+              <div class="b out">Perfect 👍</div>
+            </div>
+          </div>
+        </div>
+        <div class="float-tag tag-a"><span class="ic"><svg width="18" height="18"><use href="#i-check"/></svg></span><div>Karen confirmed<small>Replied "C" at 7:51 AM</small></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRADES -->
+  <div class="trades">
+    <div class="wrap">
+      <p>Built for 1 to 3 person crews who work in their customers' homes</p>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>House cleaning</span>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>Mobile detailing</span>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>Handyman</span>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>Pet grooming</span>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>Pressure washing</span>
+      <span class="chip"><svg width="10" height="10"><use href="#i-spark"/></svg>Lawn care</span>
+    </div>
+  </div>
+
+  <!-- PROBLEM -->
+  <section class="sec problem" style="margin-top:64px">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Sound familiar?</p>
+        <h2>You're good at the work. The scheduling is what wears you down.</h2>
+      </div>
+      <div class="problem-grid">
+        <div class="pcard"><span class="big">10:40 PM</span><p>Still typing tomorrow's jobs into your calendar from a pile of texts and voicemails.</p></div>
+        <div class="pcard"><span class="big">"Was that today?"</span><p>You drive 25 minutes, knock, and nobody's home. That slot, and the gas, are gone.</p></div>
+        <div class="pcard"><span class="big">One more app</span><p>Big field-service software wants a desktop, a training video, and a monthly fee sized for a 20-person company.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="sec" id="how">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">How it works</p>
+        <h2>Three steps. You only do the first one.</h2>
+        <p>If you can send a text, you already know how to use HeadingOver.</p>
+      </div>
+      <div class="steps">
+        <div class="step">
+          <span class="step-n">1</span>
+          <h3>Text or call it in</h3>
+          <p>Between jobs, in the truck, or at the kitchen table. Say it however you normally would.</p>
+          <div class="step-vis">
+            <div class="mini out">Ruiz family, Sat 9am, full detail on the Tahoe</div>
+            <div class="mini out">Move Jen's grooming to Thursday same time</div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">2</span>
+          <h3>It lands on your calendar</h3>
+          <p>The job, time, address and customer go straight into Google Calendar. If something's unclear, it texts you back to check.</p>
+          <div class="step-vis">
+            <div class="ev"><span class="ev-time">9:00</span><i></i><div><b>Ruiz · Full detail</b><small>Sat · Chevy Tahoe</small></div></div>
+            <div class="ev am"><span class="ev-time">1:30</span><i></i><div><b>Jen P. · Groom</b><small>Thu · moved from Tue</small></div></div>
+          </div>
+        </div>
+        <div class="step">
+          <span class="step-n">3</span>
+          <h3>Your customer hears from you</h3>
+          <p>They get a friendly confirmation right away and a reminder before you arrive. They can confirm or ask to reschedule by text.</p>
+          <div class="step-vis">
+            <div class="mini in">Hi Maria, you're booked with Shine Mobile Detail Sat at 9 AM. Reply C to confirm or R to reschedule.</div>
+            <div class="mini out">C</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMER TEXTS -->
+  <section class="sec" id="customers" style="padding-top:0">
+    <div class="wrap split">
+      <div class="split-copy">
+        <p class="eyebrow">Fewer no-shows</p>
+        <h2>Confirmations and reminders go out on their own.</h2>
+        <p class="lede">Every booking gets a text your customer can actually reply to. You find out about a conflict the night before, not on their doorstep.</p>
+        <ul class="checks">
+          <li><span class="ck"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Sent under your business name.</b> Customers see "Bright Nest Cleaning," not a robot.</div></li>
+          <li><span class="ck"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Reminder timing you choose.</b> The evening before, the morning of, or both.</div></li>
+          <li><span class="ck"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Replies come back to you.</b> If someone needs a new time, you get a heads-up text.</div></li>
+        </ul>
+      </div>
+      <div class="stage">
+        <div class="phone">
+          <div class="screen" style="min-height:500px">
+            <div class="screen-top">
+              <span class="avatar" style="background:var(--teal);color:#fff">B</span>
+              <b>Bright Nest Cleaning</b>
+              <small>What your customer sees</small>
+            </div>
+            <div class="thread">
+              <span class="ts">Sat 7:44 AM</span>
+              <div class="b in">Hi Karen! This is Bright Nest Cleaning. You're booked for a deep clean on Tue, Nov 24 at 3 PM. Reply C to confirm or R to reschedule.</div>
+              <div class="b out">C</div>
+              <div class="b in">Thanks, you're all set. See you Tuesday!</div>
+              <span class="ts">Mon 6:00 PM</span>
+              <div class="b in">Reminder: Bright Nest Cleaning arrives tomorrow at 3 PM. Reply R if you need a new time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap split rev">
+      <div class="split-copy">
+        <p class="eyebrow">Your week, handled</p>
+        <h2>A full calendar without the late-night typing.</h2>
+        <p class="lede">Everything lives in the Google Calendar you already use, on your phone and your crew's. Nothing new to check.</p>
+        <ul class="checks">
+          <li><span class="ck"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>Confirmed jobs are marked</b> so you know who's expecting you.</div></li>
+          <li><span class="ck"><svg width="14" height="14"><use href="#i-check"/></svg></span><div><b>A morning rundown by text</b> with today's stops in order.</div></li>
+        </ul>
+      </div>
+      <div class="cal" aria-label="Example week calendar">
+        <div class="cal-head"><b>November 23 to 27</b><span>Google Calendar</span></div>
+        <div class="cal-scroll">
+          <div class="cal-grid">
+            <div class="dh"></div>
+            <div class="dh">Mon<b>23</b></div>
+            <div class="dh today">Tue<b>24</b></div>
+            <div class="dh">Wed<b>25</b></div>
+            <div class="dh">Thu<b>26</b></div>
+            <div class="dh">Fri<b>27</b></div>
+            <!-- 8am to 5pm, 340px tall: 37.8px per hour -->
+            <div class="hours"><span style="top:6px">8 AM</span><span style="top:113px">11 AM</span><span style="top:226px">2 PM</span><span style="top:332px">5 PM</span></div>
+            <div class="col">
+              <div class="job t" style="top:19px;height:76px"><b>Lee · Weekly</b><span class="conf"><svg width="10" height="10"><use href="#i-check"/></svg>Confirmed</span></div>
+              <div class="job a" style="top:170px;height:57px"><b>Patel · Move-out</b></div>
+            </div>
+            <div class="col">
+              <div class="job t" style="top:38px;height:57px"><b>Ortiz · Standard</b><span class="conf"><svg width="10" height="10"><use href="#i-check"/></svg>Confirmed</span></div>
+              <div class="job t" style="top:264px;height:76px"><b>Smiths · Deep clean</b><span class="conf"><svg width="10" height="10"><use href="#i-check"/></svg>Confirmed</span></div>
+            </div>
+            <div class="col">
+              <div class="job a" style="top:76px;height:95px"><b>Nguyen · Windows</b></div>
+            </div>
+            <div class="col"></div>
+            <div class="col">
+              <div class="job t" style="top:19px;height:57px"><b>Lee · Weekly</b><span class="conf"><svg width="10" height="10"><use href="#i-check"/></svg>Confirmed</span></div>
+              <div class="job t" style="top:189px;height:76px"><b>Grant · Standard</b></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURE TILES -->
+  <section class="sec" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Everything by text</p>
+        <h2>Run your schedule from the same thread.</h2>
+      </div>
+      <div class="tiles">
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-phone"/></svg></span><h3>Text or call</h3><p>Hands full? Call and say it out loud. It works the same as a text.</p></div>
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-move"/></svg></span><h3>Change plans fast</h3><p>Move, cancel or extend a job in a sentence. The customer is told automatically.</p><q>"Push the Lees to 11"</q></div>
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-sun"/></svg></span><h3>Morning rundown</h3><p>A short text with today's jobs, times and addresses, before you start the truck.</p></div>
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-chat"/></svg></span><h3>Ask it anything</h3><p>Check your week without opening a calendar.</p><q>"Am I free Friday afternoon?"</q></div>
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-users"/></svg></span><h3>Your whole crew</h3><p>Up to three people can text in jobs, and everyone sees the same calendar.</p></div>
+        <div class="tile"><span class="ti"><svg width="22" height="22"><use href="#i-shield"/></svg></span><h3>Respectful texting</h3><p>Customers can reply STOP anytime. Your customer list stays yours and is never sold.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="sec pricing" id="pricing">
+    <div class="wrap">
+      <div class="sec-head">
+        <p class="eyebrow">Pricing</p>
+        <h2>Simple plans that cost less than one missed job.</h2>
+        <p>Early access is free while we build this with our first crews.</p>
+      </div>
+      <div class="plans">
+        <div class="plan">
+          <div class="plan-top"><h3>Solo</h3></div>
+          <div class="price" style="font-size:36px">Free<small> during early access</small></div>
+          <p>For owner-operators who do the jobs and the booking.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Book by text or call</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Google Calendar sync</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Customer confirmations and reminders</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Morning rundown</li>
+          </ul>
+          <a class="btn btn-ghost" href="#join">Join the waitlist</a>
+        </div>
+        <div class="plan pop">
+          <div class="plan-top"><h3>Crew</h3><span class="badge">Most popular</span></div>
+          <div class="price" style="font-size:36px">Free<small> during early access</small></div>
+          <p>For small teams who share one schedule.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Everything in Solo</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Up to 3 people texting in jobs</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Shared crew calendar</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Customer reply alerts for the whole team</li>
+          </ul>
+          <a class="btn btn-primary" href="#join">Join the waitlist</a>
+        </div>
+        <div class="plan" id="personal">
+          <div class="plan-top"><h3>Personal</h3><span class="badge soft">Coming later</span></div>
+          <div class="price" style="font-size:36px">Just you</div>
+          <p>Not running a business? Text your own plans and reminders straight to your calendar.</p>
+          <ul>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>"Practice Tuesdays at 4, remind me the night before"</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Optional morning plan by text</li>
+          </ul>
+          <a class="btn btn-ghost" href="#join">Get notified</a>
+        </div>
+      </div>
+      <p class="price-note">Free during early access. Pricing isn't final. A Personal plan is planned for later at $9.99/month or $89/year. We'll confirm pricing with you before anyone is charged.</p>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec" id="faq">
+    <div class="wrap">
+      <div class="sec-head"><p class="eyebrow">Questions</p><h2>Good questions, straight answers.</h2></div>
+      <div class="faq">
+        <details open><summary>Do I need to download an app?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>No. You get a phone number to text or call. Your jobs show up in the Google Calendar app you already have.</p></details>
+        <details><summary>What if it gets a job wrong?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>It reads every booking back to you, and if anything is unclear, like a missing time or address, it texts you a quick question before adding it. You can fix anything by replying in plain words.</p></details>
+        <details><summary>Will my customers know it's automated?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>Texts are signed with your business name and written to sound like you. When a customer replies with something other than confirm or reschedule, it gets passed to you.</p></details>
+        <details><summary>Does it work with the calendar I already use?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>It works with Google Calendar today. You connect it once. HeadingOver uses your Google Calendar only to add and update the events you ask for and to check your schedule for conflicts. We never sell your calendar data or use it to train AI.</p></details>
+        <details><summary>Can customers stop the texts?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>Yes. Any customer can reply STOP and they won't get any more texts. We only text customers you've booked.</p></details>
+        <details><summary>When can I start using it?<span class="pm"><svg width="16" height="16"><use href="#i-plus"/></svg></span></summary><p>We're opening to a small group of crews first. Join the waitlist and we'll reach out to set you up and hear how you book jobs today.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- WAITLIST -->
+  <section id="join">
+    <div class="wrap">
+      <div class="join">
+        <div>
+          <p class="eyebrow" style="color:var(--amber)">Early access</p>
+          <h2 style="margin-top:12px">Be one of the first crews on HeadingOver.</h2>
+          <p class="lede">Tell us a little about your business. We'll text or email you when your spot opens.</p>
+          <ul class="join-perks">
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Free while in early access</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Help shape how it works for your trade</li>
+            <li><svg width="16" height="16"><use href="#i-check"/></svg>Set up with a real person, not a help article</li>
+          </ul>
+        </div>
+        <div id="joinArea">
+          <form id="joinForm" name="waitlist" method="POST" data-netlify="true" netlify-honeypot="company_url" novalidate>
+            <input type="hidden" name="form-name" value="waitlist">
+            <p hidden><label>Leave this empty<input name="company_url"></label></p>
+            <div class="row2">
+              <label for="jName">Your name<input id="jName" name="name" autocomplete="name" placeholder="Alex Rivera"></label>
+              <label for="jBiz">Business name<input id="jBiz" name="business" autocomplete="organization" placeholder="Bright Nest Cleaning"></label>
+            </div>
+            <label for="jEmail">Email<input id="jEmail" name="email" type="email" autocomplete="email" placeholder="you@yourbusiness.com"></label>
+            <div class="row2">
+              <label for="jTrade">Your trade
+                <select id="jTrade" name="trade">
+                  <option value="">Choose one</option>
+                  <option>House cleaning</option><option>Mobile detailing</option><option>Handyman</option><option>Pet grooming</option><option>Pressure washing</option><option>Lawn care</option><option>Something else</option><option>Personal use</option>
+                </select>
+              </label>
+              <label for="jSize">Crew size
+                <select id="jSize" name="crew_size"><option value="">Choose one</option><option>Just me</option><option>2 people</option><option>3 people</option><option>4 or more</option></select>
+              </label>
+            </div>
+            <p class="err" id="jErr" role="alert"></p>
+            <button class="btn btn-amber" type="submit">Join the waitlist</button>
+            <p class="tiny">We'll only contact you about HeadingOver. No spam, and you can unsubscribe anytime.</p>
+          </form>
+          <div class="done" id="joinDone" hidden>
+            <span class="preview-note" id="previewNote" hidden>Preview: signups aren't saved yet</span>
+            <h3 id="doneTitle">You're on the list.</h3>
+            <p>Thanks for your interest. We'll reach out when your spot opens, and we may ask a few quick questions about how you book jobs today.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot">
+      <div>
+        <a class="brand" href="#top"><svg width="30" height="30" aria-hidden="true"><use href="#logo"/></svg>HeadingOver</a>
+        <p class="foot-blurb">Text the job. It's on the calendar, and your customer knows you're heading over.</p>
+      </div>
+      <div><h4>Product</h4><ul><li><a href="#how">How it works</a></li><li><a href="#customers">Customer texts</a></li><li><a href="#pricing">Pricing</a></li><li><a href="#personal">Personal</a></li></ul></div>
+      <div><h4>Company</h4><ul><li><a href="#faq">FAQ</a></li><li><a href="#join">Early access</a></li><li>@headingoverapp</li></ul></div>
+      <div><h4>Legal</h4><ul><li><a href="#top">Privacy policy</a></li><li><a href="#top">Terms of service</a></li><li><a href="#top">SMS terms</a></li></ul></div>
+    </div>
+    <div class="legal"><span>© 2026 HeadingOver. All rights reserved.</span><span>Google Calendar is a trademark of Google LLC.</span></div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var heroForm=document.getElementById('heroForm');
+  var jEmail=document.getElementById('jEmail');
+  heroForm.addEventListener('submit',function(e){
+    e.preventDefault();
+    var v=document.getElementById('heroEmail').value.trim();
+    if(v) jEmail.value=v;
+    document.getElementById('join').scrollIntoView({behavior:'smooth'});
+    setTimeout(function(){ (v?document.getElementById('jName'):jEmail).focus({preventScroll:true}); },500);
+  });
+  var form=document.getElementById('joinForm');
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    var err=document.getElementById('jErr');
+    var email=jEmail.value.trim();
+    var name=document.getElementById('jName').value.trim();
+    if(!name){err.textContent='Add your name so we know who to reach out to.';document.getElementById('jName').focus();return;}
+    if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){err.textContent='Enter an email like you@yourbusiness.com.';jEmail.focus();return;}
+    err.textContent='';
+    var btn=form.querySelector('button[type=submit]');btn.disabled=true;btn.textContent='Sending...';
+    function finish(saved){
+      form.hidden=true;
+      document.getElementById('previewNote').hidden=saved;
+      document.getElementById('doneTitle').textContent="You're on the list, "+name.split(' ')[0]+".";
+      document.getElementById('joinDone').hidden=false;
+    }
+    var onSite=/^https?:$/.test(location.protocol)&&!/claude\.ai|claudeusercontent/.test(location.hostname);
+    if(!onSite){finish(false);return;}
+    fetch('/',{method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded'},body:new URLSearchParams(new FormData(form)).toString()})
+      .then(function(r){if(!r.ok)throw new Error(r.status);finish(true);})
+      .catch(function(){btn.disabled=false;btn.textContent='Join the waitlist';err.textContent="That didn't go through. Check your connection and try again.";});
+  });
+})();
+</script>
+
+</body>
+</html>
