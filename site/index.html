@@ -74,7 +74,7 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 /* Hero */
 .hero{padding-block:32px 20px}
 .hero-grid{display:grid;gap:32px}
-.hero h1{font-size:clamp(36px,10.5vw,76px);font-weight:800}
+.hero h1{font-size:clamp(32px,8.8vw,64px);font-weight:800}
 .hero .lede{margin-top:18px;font-size:18px;color:var(--muted);max-width:44ch}
 .hero-cta{margin-top:24px;display:flex;flex-direction:column;gap:10px;align-items:stretch}
 .helper{font-size:15px;color:var(--muted);text-align:center}
@@ -121,6 +121,7 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 .price{font:800 40px/1 var(--font-display);color:var(--ink);letter-spacing:-.02em}
 .price small{font:500 16px var(--font-body);color:var(--muted)}
 .plan p{color:var(--muted);font-size:16px}
+.tile .badge{margin-bottom:2px}
 .price-note{margin-top:18px;font-size:15px;color:var(--muted)}
 
 /* FAQ */
@@ -149,6 +150,7 @@ input:focus,select:focus{outline:none;border-color:var(--amber)}
 footer{padding-block:36px 48px;border-top:1px solid var(--line);margin-top:56px;font-size:15px;color:var(--muted)}
 footer .wrap{display:flex;flex-direction:column;gap:14px}
 footer nav{display:flex;flex-wrap:wrap;gap:6px 22px}
+footer a[href^=mailto]{color:var(--ink)}
 footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--text)}
 
 /* Wider screens */
@@ -186,8 +188,8 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
   <section class="hero">
     <div class="wrap hero-grid">
       <div>
-        <h1>Your techs are always heading over to the right job.</h1>
-        <p class="lede">Text or call a job, a shift, or a day off to your HeadingOver number. It goes on your Google Calendar. Your crew gets a text. Your customers get a confirmation and a reminder &mdash; only if they&rsquo;ve agreed to hear from you.</p>
+        <h1>Change your crew's schedule with one text. No app for your guys.</h1>
+        <p class="lede">Text or call a job, a shift, or a day off to your HeadingOver number. It goes straight onto your Google Calendar, and your crew gets a text.</p>
         <div class="hero-cta">
           <a class="btn btn-primary" href="#join" id="heroCta">Request a founding pilot</a>
           <p class="helper">30 days free for founding pilots</p>
@@ -234,10 +236,10 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
       <div class="tiles">
         <div class="tile"><h3>No app for your techs</h3><p>They already have a phone. They get a text. That&rsquo;s the schedule.</p></div>
         <div class="tile"><h3>Run the board from your pocket</h3><p>Call it in from the truck. Text it between jobs. You don&rsquo;t have to open a dashboard to change the day.</p></div>
-        <div class="tile"><h3>Customers know you&rsquo;re coming</h3><p>Send a confirmation when the job is booked and a reminder before you arrive &mdash; only to customers who have agreed to receive texts from your business.</p></div>
+        <div class="tile"><span class="badge">Pilot crews help pick what&rsquo;s next.</span><h3>Customers know you&rsquo;re coming</h3><p>Send a confirmation when the job is booked and a reminder before you arrive &mdash; only to customers who have agreed to receive texts from your business.</p></div>
         <div class="tile"><h3>When the day changes, the board changes</h3><p>A call-out or a day off comes in. You text the update. The calendar moves, and the rest of the crew hears it.</p></div>
       </div>
-      <div class="soon"><p><b>Coming soon.</b> Live &ldquo;heading over&rdquo; texts when you&rsquo;re on the way. Time-off requests from the crew, by text. A morning rundown of the day. Coming soon.</p></div>
+      <div class="soon"><p><b>Pilot crews help pick what&rsquo;s next.</b> Live &ldquo;heading over&rdquo; texts when you&rsquo;re on the way. Time-off requests from the crew, by text. A morning rundown of the day.</p></div>
     </div>
   </section>
 
@@ -273,7 +275,8 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
         <details><summary>Will you text my customers?</summary><p>Only if they have agreed to receive texts from your business. Confirmations and reminders go out with their consent. They can reply STOP to opt out.</p></details>
         <details><summary>How much does it cost?</summary><p>Founding pilot: 30 days free, then $49/month locked for 12 months, for the first 5 St. George crews. Regular Crew plan: $59/month for up to 3 users and 300 texts ($0.05 per extra text). We'll confirm before any charge, and you can cancel online anytime.</p></details>
         <details><summary>What can I text or call in today?</summary><p>Jobs, shifts, and time-off changes you make as the manager. HeadingOver adds them to your Google Calendar and texts the people who need to know.</p></details>
-        <details><summary>What is a founding pilot?</summary><p>An early spot for a crew manager to use HeadingOver on real jobs and help shape what comes next, including on-the-way &ldquo;heading over&rdquo; texts, time-off requests from the crew, and a morning rundown.</p></details>
+        <details><summary>What is a founding pilot?</summary><p>An early spot for a crew manager to use HeadingOver on real jobs. Pilot crews help pick what&rsquo;s next.</p></details>
+        <details><summary>Already using Jobber or a whiteboard?</summary><p>Keep it. HeadingOver lets you change your schedule by text from the truck, and your calendar and crew update in seconds. During the pilot we'll work with how you already schedule.</p></details>
         <details><summary>Does it work with the calendar I already use?</summary><p>It works with Google Calendar today. You connect it once. HeadingOver uses your Google Calendar only to add and update the events you ask for and to check your schedule for conflicts. We never sell your calendar data or use it to train AI.</p></details>
       </div>
     </div>
@@ -314,7 +317,7 @@ footer nav a{display:inline-flex;align-items:center;min-height:44px;color:var(--
 
 <footer>
   <div class="wrap">
-    <div><b style="color:var(--ink)">HeadingOver</b><br>Schedule the crew by text. They don&rsquo;t need an app.<br>&copy; 2026 HeadingOver</div>
+    <div><b style="color:var(--ink)">HeadingOver</b><br>Schedule the crew by text. They don&rsquo;t need an app.<br>Built in St. George by Garren, a local founder. Questions? Email <a href="mailto:hello@headingover.com">hello@headingover.com</a>.<br>&copy; 2026 HeadingOver</div>
     <nav aria-label="Legal"><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/sms-terms">SMS Terms</a></nav>
   </div>
 </footer>
